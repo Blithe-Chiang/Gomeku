@@ -12,6 +12,9 @@ namespace Gomeku
 {
     public partial class Form1 : Form
     {
+
+        Board board = new Board();
+
         public Form1()
         {
             InitializeComponent();
@@ -31,6 +34,18 @@ namespace Gomeku
             {
                 this.Controls.Add(new WhitePiece(e.X, e.Y));
                 isBlack = true;
+            }
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (board.CanBePlaced(e.X, e.Y))
+            {
+                this.Cursor = Cursors.Hand;
+            }
+            else
+            {
+                this.Cursor = Cursors.Default;
             }
         }
     }
