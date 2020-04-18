@@ -8,12 +8,16 @@ namespace Gomeku
         private const int NODE_DISTANCE = 75;
         private const int NODE_RADIUS = 10;
         private const int OFFSET = 73;
+        private const int GAPS = 8;
+        public static readonly Point NO_MATCH_POINT = new Point(-1, -1);
 
-        private static readonly Point NO_MATCH_POINT = new Point(-1, -1);
 
-        // 记录棋盘里面的棋子状况
-        private Piece[,] pieceData = new Piece[9, 9];
+        // 当前玩家刚刚下的棋子的位置
+        private Point lastNode = NO_MATCH_POINT;
 
+
+        public Piece[,] PieceData { get; set; } = new Piece[9, 9];
+        public Point LastNode { get; private set; }
 
         public Piece CreatePiece(int x, int y, PieceType type)
         {
@@ -34,7 +38,8 @@ namespace Gomeku
                 piece = new WhitePiece(x1, y1);
             }
 
-            pieceData[nodeId.X, nodeId.Y] = piece;
+            LastNode = nodeId;
+            PieceData[nodeId.X, nodeId.Y] = piece;
 
             return piece;
         }
@@ -51,7 +56,7 @@ namespace Gomeku
             }
 
             // 判断该地方时候已经有了棋子
-            if (pieceData[nodeId.X, nodeId.Y] != null)
+            if (PieceData[nodeId.X, nodeId.Y] != null)
             {
                 return false;
             }
@@ -85,7 +90,7 @@ namespace Gomeku
         public int FindTheClosetNode(int pos)
         {
             // 如果出了棋盘的边界 返回 -1
-            if (pos > NODE_DISTANCE * 8 + OFFSET + NODE_RADIUS)
+            if (pos > NODE_DISTANCE * GAPS + OFFSET + NODE_RADIUS)
             {
                 return -1;
             }
@@ -120,11 +125,11 @@ namespace Gomeku
 
         public PieceType GetPieceType(int nodeIdX, int nodeidY)
         {
-            if (pieceData[nodeIdX, nodeidY] == null)
+            if (PieceData[nodeIdX, nodeidY] == null)
             {
                 return PieceType.NONE;
             }
-            return pieceData[nodeIdX, nodeidY].GetPieceType();
+            return PieceData[nodeIdX, nodeidY].GetPieceType();
         }
     }
 }
