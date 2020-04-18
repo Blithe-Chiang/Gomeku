@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Gomeku
+﻿namespace Gomeku
 {
     enum PieceType
     {
-        WHITE,BLACK
+        WHITE, BLACK, NONE
     }
 }

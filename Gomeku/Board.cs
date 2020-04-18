@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Gomeku
 {
@@ -35,7 +29,7 @@ namespace Gomeku
             {
                 piece = new BlackPiece(x1, y1);
             }
-            else if(type== PieceType.WHITE)
+            else if (type == PieceType.WHITE)
             {
                 piece = new WhitePiece(x1, y1);
             }
@@ -121,6 +115,16 @@ namespace Gomeku
             {
                 return -1;
             }
+        }
+
+
+        public PieceType GetPieceType(int nodeIdX, int nodeidY)
+        {
+            if (pieceData[nodeIdX, nodeidY] == null)
+            {
+                return PieceType.NONE;
+            }
+            return pieceData[nodeIdX, nodeidY].GetPieceType();
         }
     }
 }
