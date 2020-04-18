@@ -18,7 +18,7 @@ namespace Gomeku
         private static readonly Point NO_MATCH_POINT = new Point(-1, -1);
 
         // 记录棋盘里面的棋子状况
-        private PieceType[,] boardData = new PieceType[9, 9];
+        private Piece[,] pieceData = new Piece[9, 9];
 
 
         public Piece CreatePiece(int x, int y, PieceType type)
@@ -33,14 +33,14 @@ namespace Gomeku
             Piece piece = null;
             if (type == PieceType.BLACK)
             {
-                boardData[nodeId.X, nodeId.Y] = PieceType.BLACK;
                 piece = new BlackPiece(x1, y1);
             }
             else if(type== PieceType.WHITE)
             {
-                boardData[nodeId.X, nodeId.Y] = PieceType.WHITE;
                 piece = new WhitePiece(x1, y1);
             }
+
+            pieceData[nodeId.X, nodeId.Y] = piece;
 
             return piece;
         }
@@ -57,7 +57,7 @@ namespace Gomeku
             }
 
             // 判断该地方时候已经有了棋子
-            if (boardData[nodeId.X, nodeId.Y] != PieceType.EMPTY)
+            if (pieceData[nodeId.X, nodeId.Y] != null)
             {
                 return false;
             }
@@ -86,6 +86,7 @@ namespace Gomeku
 
             return new Point(nodeX, nodeY);
         }
+
 
         public int FindTheClosetNode(int pos)
         {

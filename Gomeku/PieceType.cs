@@ -8,6 +8,6 @@ namespace Gomeku
 {
     enum PieceType
     {
-        EMPTY,WHITE,BLACK
+        WHITE,BLACK
     }
 }
