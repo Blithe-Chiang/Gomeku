@@ -33,12 +33,12 @@ namespace Gomeku
 
             if (isBlack)
             {
-                this.Controls.Add(board.CreatePiece(e.X,e.Y,isBlack));
+                this.Controls.Add(board.CreatePiece(e.X,e.Y,PieceType.BLACK));
                 isBlack = false;
             }
             else
             {
-                this.Controls.Add(board.CreatePiece(e.X,e.Y,isBlack));
+                this.Controls.Add(board.CreatePiece(e.X,e.Y,PieceType.WHITE));
                 isBlack = true;
             }
         }
