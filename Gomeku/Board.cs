@@ -17,6 +17,35 @@ namespace Gomeku
 
         private static readonly Point NO_MATCH_POINT = new Point(-1, -1);
 
+        // 记录棋盘里面的棋子状况
+        private int[,] boardData = new int[9, 9];
+
+
+        public Piece CreatePiece(int x, int y, bool isBlack)
+        {
+            Point nodeId = FindTheClosetNode(x, y);
+
+            // 修正坐标
+            int x1 = nodeId.X * NODE_DISTANCE + OFFSET;
+            int y1 = nodeId.Y * NODE_DISTANCE + OFFSET;
+
+
+            Piece piece = null;
+            if (isBlack)
+            {
+                boardData[nodeId.X, nodeId.Y] = 1;
+                piece = new BlackPiece(x1, y1);
+            }
+            else
+            {
+                boardData[nodeId.X, nodeId.Y] = 2;
+                piece = new WhitePiece(x1, y1);
+            }
+
+            return piece;
+        }
+
+
         public bool CanBePlaced(int x, int y)
         {
 
@@ -27,12 +56,14 @@ namespace Gomeku
                 return false;
             }
 
-            // TODO: 判断该地方时候已经有了棋子
-
+            // 判断该地方时候已经有了棋子
+            if (boardData[nodeId.X, nodeId.Y] != 0)
+            {
+                return false;
+            }
 
             // 如果上面的都满足的话返回true 
 
-            Debug.WriteLine(nodeId.Y.ToString(),nodeId.X.ToString());
             return true;
         }
 
@@ -58,6 +89,12 @@ namespace Gomeku
 
         public int FindTheClosetNode(int pos)
         {
+            // 如果出了棋盘的边界 返回 -1
+            if (pos > NODE_DISTANCE * 8 + OFFSET + NODE_RADIUS)
+            {
+                return -1;
+            }
+
             pos -= OFFSET;
 
             int quotient = pos / NODE_DISTANCE;

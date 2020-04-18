@@ -35,7 +35,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Gomeku.Properties.Resources.board;
-            this.ClientSize = new System.Drawing.Size(747, 743);
+            this.ClientSize = new System.Drawing.Size(749, 746);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Gomoku";
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);

@@ -13,7 +13,8 @@ namespace Gomeku
     public partial class Form1 : Form
     {
 
-        Board board = new Board();
+        private Board board = new Board();
+        private bool puttable = false;
 
         public Form1()
         {
@@ -25,14 +26,19 @@ namespace Gomeku
 
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
+            if (!puttable)
+            {
+                return;
+            }
+
             if (isBlack)
             {
-                this.Controls.Add(new BlackPiece(e.X, e.Y));
+                this.Controls.Add(board.CreatePiece(e.X,e.Y,isBlack));
                 isBlack = false;
             }
             else
             {
-                this.Controls.Add(new WhitePiece(e.X, e.Y));
+                this.Controls.Add(board.CreatePiece(e.X,e.Y,isBlack));
                 isBlack = true;
             }
         }
@@ -41,10 +47,12 @@ namespace Gomeku
         {
             if (board.CanBePlaced(e.X, e.Y))
             {
+                puttable = true;
                 this.Cursor = Cursors.Hand;
             }
             else
             {
+                puttable = false;
                 this.Cursor = Cursors.Default;
             }
         }
