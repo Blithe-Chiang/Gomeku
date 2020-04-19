@@ -9,12 +9,14 @@ namespace Gomeku
 
         private Game game = new Game();
 
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void MouseDown(object sender, MouseEventArgs e)
+
+        private void pictureBox_Board_MouseDown(object sender, MouseEventArgs e)
         {
             Piece piece = game.CreatePiece(e.X, e.Y);
             if (piece != null)
@@ -35,6 +37,7 @@ namespace Gomeku
             }
         }
 
+
         private void RePlay()
         {
             this.RemovePieces();
@@ -49,7 +52,7 @@ namespace Gomeku
             {
                 for (int j = 0; j < 9; j++)
                 {
-                    Piece piece = game.board.PieceData[i, j];
+                    Piece piece = game.Board.PieceData[i, j];
                     if (piece != null)
                     {
                         this.pictureBox_Board.Controls.Remove(piece);
@@ -58,18 +61,19 @@ namespace Gomeku
             }
         }
 
-
-        private void MouseMove(object sender, MouseEventArgs e)
+        
+        private void pictureBox_Board_MouseMove(object sender, MouseEventArgs e)
         {
             if (game.CanBePlaced(e.X, e.Y))
             {
-                this.Cursor = Cursors.Hand;
+                this.Cursor = Cursors.Hand; // 显示手形图标
             }
             else
             {
                 this.Cursor = Cursors.Default;
             }
         }
+
 
         private void button_Undo_Click(object sender, EventArgs e)
         {
@@ -79,8 +83,8 @@ namespace Gomeku
             {
                 return;
             }
-            this.pictureBox_Board.Controls.Remove(game.board.PieceData[point.X, point.Y]);
-            game.board.PieceData[point.X, point.Y] = null;
+            this.pictureBox_Board.Controls.Remove(game.Board.PieceData[point.X, point.Y]);
+            game.Board.PieceData[point.X, point.Y] = null;
         }
     }
 }

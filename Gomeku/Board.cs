@@ -11,14 +11,14 @@ namespace Gomeku
         private const int OFFSET = 73;
         private const int GAPS = 8;
         public static readonly Point NO_MATCH_POINT = new Point(-1, -1);
-
-
-        public Piece[,] PieceData { get; set; } = new Piece[9, 9];
+        public Piece[,] PieceData { get; private set; } = new Piece[9, 9];
 
         // 当前玩家刚刚下的棋子的位置
         public Point LastNode { get; private set; } = NO_MATCH_POINT;
 
+        // 记录下棋的轨迹
         public Stack<Point> pointStack = new Stack<Point>();
+
 
         public Piece CreatePiece(int x, int y, PieceType type)
         {
@@ -68,6 +68,7 @@ namespace Gomeku
 
             return true;
         }
+
 
         public Point FindTheClosetNode(int x, int y)
         {

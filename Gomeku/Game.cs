@@ -6,18 +6,15 @@ namespace Gomeku
     // 游戏管理器
     class Game
     {
-
-        public Board board;
+        public Board Board { get; private set; }
         private bool puttable;
-
-
-
         private PieceType currentPlayer;
+        public PieceType Winner { get; private set; }
 
 
         public void InitGame()
         {
-            board = new Board();
+            Board = new Board();
             puttable = false;
 
             currentPlayer = PieceType.BLACK;
@@ -32,13 +29,9 @@ namespace Gomeku
         }
 
 
-
-
-        public PieceType Winner { get; private set; }
-
         public bool CanBePlaced(int x, int y)
         {
-            bool result = board.CanBePlaced(x, y);
+            bool result = Board.CanBePlaced(x, y);
             puttable = result;
             return result;
         }
@@ -51,7 +44,7 @@ namespace Gomeku
                 return null;
             }
 
-            Piece piece = board.CreatePiece(x, y, currentPlayer);
+            Piece piece = Board.CreatePiece(x, y, currentPlayer);
 
 
             // 在玩家刚刚下完棋子的时候，判断他是否获胜
@@ -69,6 +62,7 @@ namespace Gomeku
 
             return piece;
         }
+
 
         private void CheckWinner()
         {
@@ -88,8 +82,8 @@ namespace Gomeku
                         continue;
                     }
 
-                    int targetX = board.LastNode.X;
-                    int targetY = board.LastNode.Y;
+                    int targetX = Board.LastNode.X;
+                    int targetY = Board.LastNode.Y;
 
                     int count = 1;
                     while (count < 5)
@@ -99,24 +93,29 @@ namespace Gomeku
 
                         // 检查旁边位置的棋子
                         if (offsetX < 0 || offsetX >= 9 || offsetY < 0 || offsetY >= 9
-                            || board.GetPieceType(offsetX, offsetY) != currentPlayer)
+                            || Board.GetPieceType(offsetX, offsetY) != currentPlayer)
                         {
                             break;
                         }
                         count++;
                     }
 
+                    /* 下面的都是和检查是否有玩家获胜相关的代码  */
+
+
+                    // 检查当前方向是有5个同样颜色的棋子
                     if (count == 5)
                     {
                         Winner = currentPlayer;
-                        return; // 玩家赢了，退出函数
+                        return; 
                     }
 
-                    // 存储一个方向上面的当前玩家的棋子的个数
+                    // 存储一个方向上的当前玩家的棋子的个数
                     countSet[xDir + 1, yDir + 1] = count;
 
-                    // -1 是因为中间有一个重复的。也就是当前下的棋子它本身
-                    if ((count + countSet[-xDir + 1, -yDir + 1]) - 1 >= 5)
+                   
+                    // 检查相对方向上面加起来是否满足获胜条件
+                    if ((count + countSet[-xDir + 1, -yDir + 1]) - 1 >= 5)  // -1 是因为中间有一个重复的。也就是当前下的棋子它本身
                     {
                         Winner = currentPlayer;
                         return;
@@ -128,12 +127,13 @@ namespace Gomeku
 
         }
 
+
         public Point Undo()
         {
-            if (board.pointStack.Count > 0)
+            if (Board.pointStack.Count > 0)
             {
-                Point point = board.pointStack.Pop();
-                currentPlayer = board.GetPieceType(point.X, point.Y);
+                Point point = Board.pointStack.Pop();
+                currentPlayer = Board.GetPieceType(point.X, point.Y);
 
                 return point;
             }

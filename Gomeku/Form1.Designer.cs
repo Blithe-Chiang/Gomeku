@@ -41,8 +41,8 @@
             this.pictureBox_Board.Size = new System.Drawing.Size(750, 750);
             this.pictureBox_Board.TabIndex = 0;
             this.pictureBox_Board.TabStop = false;
-            this.pictureBox_Board.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDown);
-            this.pictureBox_Board.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MouseMove);
+            this.pictureBox_Board.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Board_MouseDown);
+            this.pictureBox_Board.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Board_MouseMove);
             // 
             // button_Undo
             // 
