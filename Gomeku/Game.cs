@@ -132,18 +132,9 @@ namespace Gomeku
         {
             if (board.pointStack.Count > 0)
             {
-
-                // 切换下棋玩家
-                if (currentPlayer == PieceType.BLACK)
-                {
-                    currentPlayer = PieceType.WHITE;
-                }
-                else if (currentPlayer == PieceType.WHITE)
-                {
-                    currentPlayer = PieceType.BLACK;
-                }
-
                 Point point = board.pointStack.Pop();
+                currentPlayer = board.GetPieceType(point.X, point.Y);
+
                 return point;
             }
             return Board.NO_MATCH_POINT;
