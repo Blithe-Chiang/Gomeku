@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Gomeku
@@ -13,13 +14,13 @@ namespace Gomeku
             InitializeComponent();
         }
 
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        private void MouseDown(object sender, MouseEventArgs e)
         {
             Piece piece = game.CreatePiece(e.X, e.Y);
             if (piece != null)
             {
-                this.Controls.Add(piece);
-               
+                this.pictureBox_Board.Controls.Add(piece);
+
                 // 检查是否有玩家获胜
                 if (game.Winner == PieceType.BLACK)
                 {
@@ -51,14 +52,14 @@ namespace Gomeku
                     Piece piece = game.board.PieceData[i, j];
                     if (piece != null)
                     {
-                        this.Controls.Remove(piece);
+                        this.pictureBox_Board.Controls.Remove(piece);
                     }
                 }
-            }   
+            }
         }
 
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        private void MouseMove(object sender, MouseEventArgs e)
         {
             if (game.CanBePlaced(e.X, e.Y))
             {
@@ -68,6 +69,18 @@ namespace Gomeku
             {
                 this.Cursor = Cursors.Default;
             }
+        }
+
+        private void button_Undo_Click(object sender, EventArgs e)
+        {
+            Point point = game.Undo();
+
+            if (point == Board.NO_MATCH_POINT)
+            {
+                return;
+            }
+            this.pictureBox_Board.Controls.Remove(game.board.PieceData[point.X, point.Y]);
+            game.board.PieceData[point.X, point.Y] = null;
         }
     }
 }

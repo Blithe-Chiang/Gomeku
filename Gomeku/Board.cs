@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 
 namespace Gomeku
 {
@@ -12,12 +13,12 @@ namespace Gomeku
         public static readonly Point NO_MATCH_POINT = new Point(-1, -1);
 
 
-        // 当前玩家刚刚下的棋子的位置
-        private Point lastNode = NO_MATCH_POINT;
-
-
         public Piece[,] PieceData { get; set; } = new Piece[9, 9];
-        public Point LastNode { get; private set; }
+
+        // 当前玩家刚刚下的棋子的位置
+        public Point LastNode { get; private set; } = NO_MATCH_POINT;
+
+        public Stack<Point> pointStack = new Stack<Point>();
 
         public Piece CreatePiece(int x, int y, PieceType type)
         {
@@ -39,6 +40,8 @@ namespace Gomeku
             }
 
             LastNode = nodeId;
+            pointStack.Push(LastNode);
+
             PieceData[nodeId.X, nodeId.Y] = piece;
 
             return piece;

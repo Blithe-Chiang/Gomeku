@@ -127,5 +127,15 @@ namespace Gomeku
 
 
         }
+
+        public Point Undo()
+        {
+            if (board.pointStack.Count > 0)
+            {
+                Point point = board.pointStack.Pop();
+                return point;
+            }
+            return Board.NO_MATCH_POINT;
+        }
     }
 }
